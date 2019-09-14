@@ -8,7 +8,7 @@ import StudentHome from './components/StudentHome'
 
 function App() {
   return (
-    <StudentHome/>
+    <div>HI</div>
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
