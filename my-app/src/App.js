@@ -2,10 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TeacherHome from './components/TeacherHome'
+import CreateClassForm from './components/CreateClassForm'
+import StudentHome from './components/StudentHome'
+
 
 function App() {
   return (
-    <TeacherHome/>
+    <StudentHome/>
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
