@@ -44,14 +44,17 @@ var classes = [
   }
 ]
 
+
+// int totalAttendees?
+
 io.on("connection", client => {
   
   console.log("New client connected");
 
-  client.on('studentJoined', duple => {//message from studentHome
-    
-    console.log(duple.classId + " " + duple.studentId)
-    io.emit('notifyTeacher', duple)
+  /* Need to update both ClassView and StudyTime when student arrives/leaves */
+  client.on('studentAction', data => {//message from studentHome. data = {classId: , studentId: , present: }
+    console.log("hi")
+    io.emit('notifyClass', data)//notify teacher when he/she is creating session.
   })
 
   client.on("disconnect", () => {
@@ -59,9 +62,6 @@ io.on("connection", client => {
   });
 });
 
-/*app.post("/joinClass", (req,res) => {
-  io.emit('Geometry','Joseph') //class+student info
-})*/
 
 app.get("/getClassNames", (req, res) => {
   let classNames = classes.map(cls => cls.name);

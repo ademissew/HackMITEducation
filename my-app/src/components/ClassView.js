@@ -19,18 +19,17 @@ class ClassView extends React.Component {
             class_id: props.location.state.classId,
         }
 
-            this.state.socket.on('notifyTeacher', duple => {
-                console.log("hi")
-                if(duple.classId == this.state.class_id){
-                        for(let i=0; i<this.state.students.length; i++){
-                            if(this.state.students[i].name == duple.studentId){
-                                this.state.students[i].present = true
-                                console.log("whoa")
-                            }
+        this.state.socket.on('notifyClass', data => {
+            console.log("whoa");
+            if(data.classId == this.state.class_id){
+                    for(let i=0; i<this.state.students.length; i++){
+                        if(this.state.students[i].name == data.studentId){
+                            this.state.students[i].present = data.present
                         }
-                        this.setState({students : this.state.students}) //?
-                } 
-            }
+                    }
+                    this.setState({students : this.state.students}) //?
+            } 
+        }
         )
     }
 
@@ -41,6 +40,13 @@ class ClassView extends React.Component {
                 class_id: this.state.class_id
             });
         });
+    }
+
+    goToStudyTime = () => {
+        this.props.history.push({
+            pathname: '/studyTime',
+            state: { classId: this.state.class_id }
+        })
     }
 
     
@@ -62,7 +68,7 @@ class ClassView extends React.Component {
                             </ListItem>
                     )}
                 </List>
-                <Button variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
+                <Button variant="outlined" style={ {marginTop : '20px'} } onClick={() => this.goToStudyTime()}> Start class </Button>
             </Container>
         )
     }
