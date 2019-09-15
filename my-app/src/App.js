@@ -1,30 +1,33 @@
-import React, { Component } from "react";
+import React from 'react';
 import { socket, getWeather } from "./api";
+// import logo from './logo.svg';
+import './App.css';
+import TeacherHome from './components/TeacherHome'
+import CreateClassForm from './components/CreateClassForm'
+import StudentHome from './components/StudentHome'
 
-class App extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      response: false
-    };
-  }
-  componentDidMount() {
-    socket.on("CurrentStudents", data => this.setState({ response: data }));
-  }
+function App() {
+  // socket.on("CurrentStudents", data => this.setState({ response: data }));
 
-  render() {
-    const { response } = this.state;
-    return (
-      <div style={{ textAlign: "center" }}>
-        {response
-          ? <p>
-            The temperature in Florence is: {response} °F
-              </p>
-          : <p>Loading...</p>}
-        <button onClick={getWeather}> Get Weather </button>
-      </div>
-    );
-  }
+  return (
+    <div>HI</div>
+    // <div className="App">
+    //   <header className="App-header">
+    //     <img src={logo} className="App-logo" alt="logo" />
+    //     <p>
+    //       Edit <code>src/App.js</code> and save to reload.
+    //     </p>
+    //     <a
+    //       className="App-link"
+    //       href="https://reactjs.org"
+    //       target="_blank"
+    //       rel="noopener noreferrer"
+    //     >
+    //       Learn React
+    //     </a>
+    //   </header>
+    // </div>
+  );
 }
 export default App;

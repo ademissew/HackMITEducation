@@ -3,12 +3,14 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const socketIo = require("socket.io");
 const axios = require("axios");
+const cors = require('cors');
 
 const port = process.env.PORT || 8080;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -39,9 +41,10 @@ app.get("/getClasses", (req, res) => {
 });
 
 app.post("/createClass", (req, res) => {
-  let teacher = req.body.teacher.toLowerCase;
+  let teacher = req.body.teacher.toLowerCase();
   let className = req.body.className;
   let students = req.body.students;
+
   teachers[teacher][className] = students;
   res.send("Class created successfully").status(200);
 });

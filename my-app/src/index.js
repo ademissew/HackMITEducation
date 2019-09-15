@@ -3,8 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {Route, BrowserRouter as Router} from 'react-router-dom'
+import TeacherHome from './components/TeacherHome';
+import StudentHome from './components/StudentHome';
+import CreateClassForm from './components/CreateClassForm';
+import ClassView from './components/ClassView';
+import StudyTime from './components/StudyTime';
+import SelectClass from './components/SelectClass'
+import 'typeface-roboto'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const routing = (
+    <Router>
+    <div>
+      <Route exact path="/" component={StudentHome} />
+      <Route path="/teacherHome" component={TeacherHome} />
+      <Route path="/createClass" component={CreateClassForm} />
+      <Route path="/classView" component={ClassView} />
+      <Route path="/studyTime" component={StudyTime} />
+      <Route path="/selectClass" component={SelectClass} />
+
+    </div>
+  </Router>
+)
+ReactDOM.render(routing, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
