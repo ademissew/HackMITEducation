@@ -7,6 +7,7 @@ import React from 'react'
 // import './StudyTime.css'
 import {Planet} from 'react-kawaii'
 import Container from './Container'
+import { FadeLoader } from 'react-spinners';
 
 function getRandomColor() {
 	var letters = '0123456789ABCDEF';
@@ -21,7 +22,8 @@ export default class StudyTime extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			color: getRandomColor()
+			color: getRandomColor(),
+			loading: true
 		}
 		this.stuff = {
 			moodMapping: {
@@ -37,9 +39,19 @@ export default class StudyTime extends React.Component {
 	}
 	render(){
 		const currentMood = this.stuff.moodCycle[this.stuff.index]
+		if (this.state.loading){
+
+		}
 		return (
 		<Container>
-			<Planet size={300} mood={currentMood} color={this.stuff.moodMapping[currentMood]} text="Hello World!" />
+			{this.state.loading ?  (<FadeLoader
+					// css={override}
+					sizeUnit={"px"}
+					size={150}
+					color={'#123abc'}
+					loading={this.state.loading}
+					/>) :
+			<Planet size={300} mood={currentMood} color={this.stuff.moodMapping[currentMood]} text="Hello World!" />}
 		</Container>)
 	}
 }
