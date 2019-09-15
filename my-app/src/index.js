@@ -20,7 +20,6 @@ const routing = (
       <Route path="/classView" component={ClassView} />
       <Route path="/studyTime" component={StudyTime} />
       <Route path="/selectClass" component={SelectClass} />
-
     </div>
   </Router>
 )

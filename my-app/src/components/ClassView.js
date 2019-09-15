@@ -47,7 +47,7 @@ class ClassView extends React.Component {
                             </ListItem>
                     )}
                 </List>
-                <Button variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
+                <Button onClick={() => this.props.history.push('/studyTime')} variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
             </Container>
         )
     }
