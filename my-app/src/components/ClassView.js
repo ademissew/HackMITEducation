@@ -71,9 +71,6 @@ class ClassView extends React.Component {
                             </ListItem>
                     )}
                 </List>
-<<<<<<< HEAD
-                <Button variant="outlined" style={ {marginTop : '20px'} } onClick={() => this.goToStudyTime()}> Start class </Button>
-=======
                 <div style={{width:"50%",marginTop:'30px',marginBottom:'30px'}}>
                 <Typography id="input-slider" style={{textAlign:'left'}}>
                     Duration
@@ -89,8 +86,7 @@ class ClassView extends React.Component {
                     max={120}
                 />
                 </div>
-                <Button onClick={() => this.props.history.push('/studyTime')} variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
->>>>>>> 85570f773940a0b33a68018435b8341225bd0be1
+                <Button onClick={() => this.goToStudyTime()} variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
             </Container>
         )
     }
