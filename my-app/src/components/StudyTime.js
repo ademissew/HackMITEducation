@@ -37,9 +37,9 @@ export default class StudyTime extends React.Component {
             classId :  props.location.state.classId
         }
 
-        this.state.socket.on('notifyClass' , data => {
-            console.log(data.studentId + " has left the study session")
-        })    
+        // this.state.socket.on('notifyClass' , data => {
+        //     console.log(data.present)
+        // })    
 
 		this.stuff = {
 			moodMapping: {
@@ -50,14 +50,15 @@ export default class StudyTime extends React.Component {
 				"sad": "#81c5f9"
 			},
 			moodCycle: ["ko","sad","happy","excited","blissful"],
-			index: 2
-		}
+            index: 2
+        }
     }
     
 
-    componentWillUnmount(){//this will trigger the server to emit "notifyClass"
-        this.state.socket.emit('studentAction', 
-            {classId: this.state.classcode, studentId: this.state.username, present: false})
+    componentWillUnmount(){
+         console.log("unmounting")
+         this.state.socket.emit('studentAction', 
+             {classId: this.state.classcode, studentId: this.state.username, present: false})
     }
 
 	render(){
