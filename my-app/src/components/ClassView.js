@@ -23,9 +23,9 @@ class ClassView extends React.Component {
 
         this.state.socket.on('notifyClass', data => {
             console.log("whoa");
-            if(data.classId == this.state.class_id){
+            if(data.classId === this.state.class_id){
                     for(let i=0; i<this.state.students.length; i++){
-                        if(this.state.students[i].name == data.studentId){
+                        if(this.state.students[i].name === data.studentId){
                             this.state.students[i].present = data.present
                         }
                     }
