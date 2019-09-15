@@ -22,7 +22,7 @@ class ClassView extends React.Component {
         }
 
         this.state.socket.on('notifyClass', data => {
-            this.setState({ students: data }) //?
+            this.setState({ students: data })
         })
     }
 

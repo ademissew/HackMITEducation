@@ -60,13 +60,6 @@ var classes = [
 
 // int totalAttendees?
 
-connections = [
-  /*{
-    'connection': 'aef08312',
-    data : {'name' : 'joseph', 'classId' : 'son'}
-  }*/
-]
-
 io.on("connection", client => {
 
 
@@ -74,12 +67,7 @@ io.on("connection", client => {
 
   /* Need to update both ClassView and StudyTime when student arrives/leaves */
   client.on('studentAction', data => {//message from studentHome. data = {className: geometry, student:{name: alenta, present: true}}
-    console.log(data);
-    connections.push({
-      'connection': client.id
-    })
     let cls = classes.find(c => c.name === data.className);
-    console.log(cls);
     let student = cls.students.find(s => s.name === data.student.name);
     student.present = data.student.present;
     io.emit('notifyClass', cls.students) //notify teacher when he/she is creating session.
@@ -109,20 +97,6 @@ app.post("/createClass", (req, res) => {
   classes.push({ "name": className, "students": students });
 
   res.send("Class created successfully").status(200);
-});
-
-app.post("/addStudent", (req, res) => {
-  let className = req.body.className;
-  let name = req.body.name;
-  let cls = classes.find((c => c.name === className));
-  let student = cls.find((student => student.name === name));
-  student.present = true;
-
-  res.send({}).status(200);
-});
-
-app.put("/changeActivity", (req, res) => {
-  res.send({ response: "I am alive" }).status(200);
 });
 
 app.post("/startClass", (req, res) => {
