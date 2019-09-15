@@ -31,7 +31,7 @@ class TeacherHome extends React.Component {
     render(){
         return (
             <Container>
-                    <Button variant="outlined" onClick={() => this.props.history.push('/createClass')}> Create class </Button>
+                    {/* <Button variant="outlined" onClick={() => this.props.history.push('/createClass')}> Create class </Button> */}
                     <Button variant="outlined" onClick={() => this.props.history.push('/selectClass')}> Start class </Button>
             </Container>
         )
