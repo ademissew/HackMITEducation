@@ -30,7 +30,7 @@ const getStudents = async (className) => {
     }
 };
 
-const createClass = async (className, students) => {
+const createClass = async (className, students, props) => {
     let data = {
         "className": className,
         "students": students
@@ -39,6 +39,7 @@ const createClass = async (className, students) => {
         const res = await axios.post(
             baseURL + "/createClass", data
         );
+        props.history.push('/selectClass')
     } catch (error) {
         console.error(`Error: ${error.code}`);
     }

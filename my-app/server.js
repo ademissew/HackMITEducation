@@ -48,9 +48,10 @@ io.on("connection", client => {
   
   console.log("New client connected");
 
-  client.on('join', (classId, student) => {//message from studentHome
-    console.log(classId + " " + student)
-    //io.emit(classId, student) //tell classView
+  client.on('studentJoined', duple => {//message from studentHome
+    
+    console.log(duple.classId + " " + duple.studentId)
+    io.emit('notifyTeacher', duple)
   })
 
   client.on("disconnect", () => {
@@ -76,6 +77,7 @@ app.get("/getStudents", (req, res) => {
 app.post("/createClass", (req, res) => {
   let className = req.body.className;
   let students = req.body.students;
+
   classes.push({ "name": className, "students": students });
 
   res.send("Class created successfully").status(200);

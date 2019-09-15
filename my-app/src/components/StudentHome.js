@@ -16,13 +16,13 @@ class StudentHome extends React.Component{
     
     }
     joinClass(){
-        const username = document.getElementById("username-id").value
-        const classcode = document.getElementById("class-code-id").value
         //this.setState({'username':username,'classcode':classcode})
         // if class/username doesn't exist, should push back to /studentHome, else go to /studyTime
-        
-        this.state.socket.emit('join', (classcode, username))
-        
+        console.log(this.state.username);
+        this.state.socket.emit('studentJoined', {
+            classId: this.state.classcode,
+            studentId: this.state.username
+        });
         this.props.history.push("/studyTime")
     }
     handleUsernameChange(event) {
