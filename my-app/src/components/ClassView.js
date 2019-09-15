@@ -22,74 +22,77 @@ class ClassView extends React.Component {
         }
 
         this.state.socket.on('notifyClass', data => {
-            console.log("whoa");
+
             if (data.classId === this.state.class_id) {
+                console.log("hellooo")
                 for (let i = 0; i < this.state.students.length; i++) {
                     if (this.state.students[i].name === data.studentId) {
+                        console.log(data.present)
                         this.state.students[i].present = data.present
                     }
                 }
-                this.setState({ students: this.state.students }) //?
             }
+            this.setState({ students: this.state.students }) //?
+        }
         }
         )
-    }
+}
 
-    componentDidMount() {
-        getStudents(this.state.class_id).then((response) => {
-            this.setState({
-                students: response.data,
-                class_id: this.state.class_id
-            });
+componentDidMount() {
+    getStudents(this.state.class_id).then((response) => {
+        this.setState({
+            students: response.data,
+            class_id: this.state.class_id
         });
-    }
+    });
+}
 
-    goToStudyTime = () => {
-        this.props.history.push({
-            pathname: '/studyTime',
-            state: { classId: this.state.class_id }
-        })
-    }
+goToStudyTime = () => {
+    this.props.history.push({
+        pathname: '/studyTime',
+        state: { classId: this.state.class_id }
+    })
+}
 
 
 
-    render() {
-        return (
-            <Container>
-                <h1>Join Class</h1>
-                <div style={{ fontSize: '150%', margin: '10px' }}>
-                    Class code : <span style={{ fontWeight: 500 }}>{this.state.class_id}</span>
-                </div>
-                <List style={{ width: '50%' }}>
-                    {this.state.students.map(
-                        (item) =>
-                            <ListItem divider={true} >
-                                <div style={{ color: item.present ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end' }}>
-                                    {item.present ? <Done /> : <Clear />}
-                                    <ListItemText icon="done" primary={item.name} style={{ marginLeft: '20px' }}>{item}</ListItemText>
-                                </div>
-                            </ListItem>
-                    )}
-                </List>
-                <div style={{ width: "50%", marginTop: '30px', marginBottom: '30px' }}>
-                    <Typography id="input-slider" style={{ textAlign: 'left' }}>
-                        Duration
+render() {
+    return (
+        <Container>
+            <h1>Join Class</h1>
+            <div style={{ fontSize: '150%', margin: '10px' }}>
+                Class code : <span style={{ fontWeight: 500 }}>{this.state.class_id}</span>
+            </div>
+            <List style={{ width: '50%' }}>
+                {this.state.students.map(
+                    (item) =>
+                        <ListItem divider={true} >
+                            <div style={{ color: item.present ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end' }}>
+                                {item.present ? <Done /> : <Clear />}
+                                <ListItemText icon="done" primary={item.name} style={{ marginLeft: '20px' }}>{item}</ListItemText>
+                            </div>
+                        </ListItem>
+                )}
+            </List>
+            <div style={{ width: "50%", marginTop: '30px', marginBottom: '30px' }}>
+                <Typography id="input-slider" style={{ textAlign: 'left' }}>
+                    Duration
                 </Typography>
-                    <Slider
-                        style={{ width: "100%", display: 'flex' }}
-                        defaultValue={60}
-                        aria-labelledby="discrete-slider"
-                        valueLabelDisplay="auto"
-                        step={15}
-                        marks
-                        min={0}
-                        max={120}
-                    />
-                </div>
-                <Button onClick={() => this.goToStudyTime()} variant="outlined" style={{ marginTop: '20px' }}> Start class </Button>
-            </Container>
-        )
-    }
+                <Slider
+                    style={{ width: "100%", display: 'flex' }}
+                    defaultValue={60}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={15}
+                    marks
+                    min={0}
+                    max={120}
+                />
+            </div>
+            <Button onClick={() => this.goToStudyTime()} variant="outlined" style={{ marginTop: '20px' }}> Start class </Button>
+        </Container>
+    )
+}
 }
 
 export default ClassView;

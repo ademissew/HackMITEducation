@@ -44,20 +44,46 @@ var classes = [
   }
 ]
 
+/*{
+  name: "class1",
+  students: [
+    {
+      name: "student1",
+      present: true
+    },
+    {
+      name: "student2",
+      present: false
+    }
+  ]
+}*/
 
 // int totalAttendees?
 
+connections = [
+  /*{
+    'connection': 'aef08312',
+    data : {'name' : 'joseph', 'classId' : 'son'}
+  }*/
+]
+
 io.on("connection", client => {
+
   
   console.log("New client connected");
 
   /* Need to update both ClassView and StudyTime when student arrives/leaves */
   client.on('studentAction', data => {//message from studentHome. data = {classId: , studentId: , present: }
-    console.log("hi")
+    //console.log(client);
+    connections.push({
+      'connection' : client.id,
+      'data' : {'studentId' : data.studentId, 'classId' : data.classId}
+    })
+    classes = data
     io.emit('notifyClass', data)//notify teacher when he/she is creating session.
   })
 
-  client.on("disconnect", () => {
+  client.on("disconnect", (client) => {
     console.log("Client disconnected");
   });
 });
