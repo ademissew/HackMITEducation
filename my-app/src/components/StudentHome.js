@@ -8,7 +8,7 @@ class StudentHome extends React.Component {
         super(props)
 
         this.state = {
-            socket: openSocket('http://localhost:8080')
+            socket: openSocket('http://40.112.61.8:8080')
         }
         this.joinClass = this.joinClass.bind(this)
         this.handleUsernameChange = this.handleUsernameChange.bind(this)

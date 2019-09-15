@@ -14,7 +14,7 @@ class CreateClassForm extends React.Component {
 
     }
     handleEnter(e){
-        if (e.keyCode == 13){
+        if (e.keyCode === 13){
         this.setState({ students: this.state.students.concat(
             {
                 name : this.state.student,
