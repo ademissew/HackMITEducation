@@ -23,15 +23,8 @@ class CreateClassForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        createClass("alenta", this.state.className, this.state.students)
+        createClass(this.state.className, this.state.students)
         this.props.history.push('/selectClass')
-        /*this.props.history.push({
-            pathname: '/classView',
-            state : {
-                classId: this.state.className,
-                students: this.state.students
-            }
-        })*/
     }
 
     render() {
