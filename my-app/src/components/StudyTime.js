@@ -5,8 +5,9 @@ import { Planet } from 'react-kawaii'
 import Container from './Container'
 import { FadeLoader } from 'react-spinners';
 import Confetti from 'react-confetti'
+import { getStudents, countPresent } from '../api';
+
 var d3Interpolate = require("d3-interpolate");
-import { getStudents, countPresent } from './api';
 
 export default class StudyTime extends React.Component {
 	constructor(props) {
@@ -19,10 +20,9 @@ export default class StudyTime extends React.Component {
 		}
 
 		this.state = {
-			color: getRandomColor(),
 			loading: false,
 			socket: openSocket('http://localhost:8080'),
-			studentId: studentId,
+			studentId: this.studentId,
 			classId: props.location.state.classId,
 			numStudents: 0,
 			loading: true,
@@ -55,20 +55,36 @@ export default class StudyTime extends React.Component {
 
 		this.interval = 0
 		this.intervalTwo = 0
+		this.resetAnimation = this.resetAnimation.bind(this)
 	}
 
 	componentDidMount() {
 		getStudents(this.state.classId).then((response) => {
-			this.setState({
-				numStudents: countPresent(response.data),
-				classId: this.state.classId
-			});
+			let count = countPresent(response.data)
+			if (count !== this.state.numStudents) {
+				this.setState({
+					numStudents: count,
+					index:0,
+					cycle:0,
+					classId: this.state.classId
+				});
+			} else {
+				this.setState({
+					numStudents: count,
+					classId: this.state.classId
+				});
+			}
+			
 		});
 	}
 
-	componentDidMount() {
-		this.interval = setInterval(() => this.setState({ time: Date.now(), index: (this.state.index + 1), cycle: 0 }), 40000);
+	resetAnimation(animiationState){
+		this.interval = setInterval(() => this.setState({ time: Date.now(), index: (animiationState+ 1), cycle: 0 }), 40000);
 		this.intervalTwo = setInterval(() => this.setState({ time: Date.now(), cycle: this.state.cycle + 1 }), 200);
+	}
+
+	componentDidMount() {
+		this.resetAnimation(2)
 	}
 
 	componentWillUnmount() {//this will trigger the server to emit "notifyClass"
