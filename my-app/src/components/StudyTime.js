@@ -32,7 +32,7 @@ export default class StudyTime extends React.Component {
 		this.state = {
 			color: getRandomColor(),
 			loading: true,
-			socket: openSocket('http://0.0.0.0:8080'),
+			socket: openSocket('http://40.112.61.8:8080'),
 			studentId: studentId,
 			classId: props.location.state.classId
 		}
