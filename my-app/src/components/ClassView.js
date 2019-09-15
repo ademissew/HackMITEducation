@@ -11,7 +11,7 @@ class ClassView extends React.Component {
            {name : 'Joseph', present: 1}
        ]
        this.state = {
-           students : students,
+           students : students/*props.location.state.students*/,
            class_id : props.location.state.classId
        }
    }
