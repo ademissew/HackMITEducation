@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import TeacherHome from './components/TeacherHome'
 import CreateClassForm from './components/CreateClassForm'
