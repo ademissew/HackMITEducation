@@ -40,6 +40,7 @@ class SelectClass extends React.Component {
         return (
 
             <Container>
+                <h1>Select Class</h1>
                 <List style={ {width:'50%'} }>
                     {
                         this.state.classes.map(

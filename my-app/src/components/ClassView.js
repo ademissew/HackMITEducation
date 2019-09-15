@@ -3,6 +3,8 @@ import Container from './Container'
 import {Button} from '@material-ui/core'
 import {List, ListItem, ListItemText} from '@material-ui/core'
 import Done from '@material-ui/icons/Done';
+import Clear from '@material-ui/icons/Clear';
+
 import { getStudents } from '../api'
 
 class ClassView extends React.Component {
@@ -30,16 +32,17 @@ class ClassView extends React.Component {
     render(){
         return(
             <Container>
-                <div style={ {fontSize: '150%'} }> 
+                <h1>Join Class</h1>
+                <div style={ {fontSize: '150%', margin: '10px'} }> 
                     Class code : <span style={ {fontWeight : 500} }>{this.state.class_id}</span> 
                 </div>
                 <List style={ {width:'50%'} }>
                     {this.state.students.map(
                         (item) => 
                             <ListItem divider={true} >
-                                <div style={{color :item.present == true ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end'}}>
-                                    <Done />
-                                    <ListItemText icon="done" primary={item.name} > </ListItemText>
+                                <div style={{color :item.present ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end'}}>
+                                    {item.present ? <Done /> : <Clear/>}
+                                    <ListItemText icon="done" primary={item.name} style={{marginLeft:'20px'}}>{item}</ListItemText>
                                 </div>
                             </ListItem>
                     )}

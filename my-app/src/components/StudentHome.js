@@ -26,6 +26,7 @@ class StudentHome extends React.Component{
     render(){
         return (
         <Container>
+            <h1>Join a Class</h1>
             <TextField
                 autoComplete="off"
                 id="username-id"
