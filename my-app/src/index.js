@@ -8,6 +8,7 @@ import TeacherHome from './components/TeacherHome';
 import StudentHome from './components/StudentHome';
 import CreateClassForm from './components/CreateClassForm';
 import ClassView from './components/ClassView';
+import StudyTime from './components/StudyTime';
 
 const routing = (
     <Router>
@@ -16,7 +17,8 @@ const routing = (
       <Route path="/teacherHome" component={TeacherHome} />
       <Route path="/createClass" component={CreateClassForm} />
       <Route path="/classView" component={ClassView} />
-      
+      <Route path="/studyTime" component={StudyTime} />
+
     </div>
   </Router>
 )
