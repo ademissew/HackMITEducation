@@ -45,12 +45,22 @@ var classes = [
 ]
 
 io.on("connection", client => {
+  
   console.log("New client connected");
+
+  client.on('join', (classId, student) => {//message from studentHome
+    console.log(classId + " " + student)
+    //io.emit(classId, student) //tell classView
+  })
 
   client.on("disconnect", () => {
     console.log("Client disconnected");
   });
 });
+
+/*app.post("/joinClass", (req,res) => {
+  io.emit('Geometry','Joseph') //class+student info
+})*/
 
 app.get("/getClassNames", (req, res) => {
   let classNames = classes.map(cls => cls.name);
