@@ -8,6 +8,7 @@ import Confetti from 'react-confetti'
 import { getStudents, countPresent } from '../api';
 
 var d3Interpolate = require("d3-interpolate");
+import { getStudents, countPresent } from '../api';
 
 export default class StudyTime extends React.Component {
 	constructor(props) {
