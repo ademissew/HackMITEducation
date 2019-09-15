@@ -1,7 +1,7 @@
 import openSocket from 'socket.io-client';
 import axios from 'axios';
 
-const baseURL = 'http://localhost:8080'
+const baseURL = 'http://18.21.220.190:8080'
 const socket = openSocket(baseURL);
 
 function getWeather() {

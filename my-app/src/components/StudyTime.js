@@ -32,7 +32,7 @@ export default class StudyTime extends React.Component {
 		this.state = {
 			color: getRandomColor(),
 			loading: true,
-			socket: openSocket('http://localhost:8080'),
+			socket: openSocket('http://18.21.220.190:8080'),
 			studentId: studentId,
 			classId: props.location.state.classId
 		}
@@ -56,9 +56,11 @@ export default class StudyTime extends React.Component {
 
 
 	componentWillUnmount() {
-		console.log("unmounting")
-		this.state.socket.emit('studentAction',
-			{ classId: this.state.classcode, studentId: this.state.username, present: false })
+		console.log("unmounting");
+		this.state.socket.emit('studentAction', {
+			className: this.state.classId,
+			student: { name: this.state.studentId, present: false }
+		});
 	}
 
 	render() {

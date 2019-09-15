@@ -69,18 +69,20 @@ connections = [
 
 io.on("connection", client => {
 
-  
+
   console.log("New client connected");
 
   /* Need to update both ClassView and StudyTime when student arrives/leaves */
-  client.on('studentAction', data => {//message from studentHome. data = {classId: , studentId: , present: }
-    //console.log(client);
+  client.on('studentAction', data => {//message from studentHome. data = {className: geometry, student:{name: alenta, present: true}}
+    console.log(data);
     connections.push({
-      'connection' : client.id,
-      'data' : {'studentId' : data.studentId, 'classId' : data.classId}
+      'connection': client.id
     })
-    classes = data
-    io.emit('notifyClass', data)//notify teacher when he/she is creating session.
+    let cls = classes.find(c => c.name === data.className);
+    console.log(cls);
+    let student = cls.students.find(s => s.name === data.student.name);
+    student.present = data.student.present;
+    io.emit('notifyClass', cls.students) //notify teacher when he/she is creating session.
   })
 
   client.on("disconnect", (client) => {
