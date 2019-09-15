@@ -1,7 +1,7 @@
 import React from 'react'
 import CreateClassForm from './CreateClassForm'
 import {Link} from 'react-router-dom'
-import {Grid, Button} from '@material-ui/core'
+import {Button} from '@material-ui/core'
 import Container from './Container'
 
 class TeacherHome extends React.Component {

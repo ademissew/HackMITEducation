@@ -1,4 +1,9 @@
-import React from 'react';
+import React from 'react'
+import Container from './Container'
+import {Button} from '@material-ui/core'
+import {List, ListItem, ListItemText} from '@material-ui/core'
+import Done from '@material-ui/icons/Done';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 class ClassView extends React.Component {
     /* 
@@ -8,26 +13,36 @@ class ClassView extends React.Component {
    constructor(props){
        super(props);
        const students = [
-           {name : 'Joseph', present: 1}
+           {name : 'Jane Doe', present: true},
+           {name : 'Foo Bar', present: false}
        ]
        this.state = {
            students : students/*props.location.state.students*/,
-           class_id : props.location.state.classId
+           class_id : props.location.state.classId,
+           color : '' // represents student presence
        }
    }
 
 
     render(){
         return(
-            <div>
-                Class code : {this.state.class_id}
-                {<ul>
+            <Container>
+                <div style={ {fontSize: '150%'} }> 
+                    Class code : <span style={ {fontWeight : 500} }>{this.state.class_id}</span> 
+                </div>
+                <List style={ {width:'50%'} }>
                     {this.state.students.map(
-                        (item) => <li> {item.name} : {item.present} </li>
+                        (item) => 
+                            <ListItem divider={true} >
+                                <div style={{color :item.present == true ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end'}}>
+                                    <Done />
+                                    <ListItemText icon="done" primary={item.name} > </ListItemText>
+                                </div>
+                            </ListItem>
                     )}
-                </ul>}
-                <button> Start class session </button>
-            </div>
+                </List>
+                <Button variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
+            </Container>
         )
     }
 }
