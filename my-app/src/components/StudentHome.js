@@ -1,11 +1,14 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
-
+import Container from './Container'
+import {TextField,Button} from '@material-ui/core'
 class StudentHome extends React.Component{
     constructor(props){
         super(props)
         this.state = {}
         this.joinClass = this.joinClass.bind(this)
+        this.handleUsernameChange = this.handleUsernameChange.bind(this)
+        this.handleCodeChange = this.handleCodeChange.bind(this)
+    
     }
     joinClass(){
         const username = document.getElementById("username-id").value
@@ -14,22 +17,45 @@ class StudentHome extends React.Component{
         // if class/username doesn't exist, should push back to /studentHome, else go to /studyTime
         this.props.history.push("/studyTime")
     }
+    handleUsernameChange(event) {
+        this.setState({ username: event.target.value });
+    }
+    handleCodeChange(event) {
+        this.setState({ classcode: event.target.value });
+    }
     render(){
         return (
-        <div>
-            <label>
-                Username: 
-                <input type="text" name="username" id="username-id"/>
-            </label>
+        <Container>
+            <TextField
+                autoComplete="off"
+                id="username-id"
+                label="User ID"
+                placeholder="User ID"
+                margin="normal"
+                style={{width:"50%",textAlign:"left"}}
+                name="username" 
+                value={this.state.username} 
+                variant="outlined"
+                onChange={this.handleUsernameChange} 
+            />
             <div></div>
-            <label>
-                Class Code: 
-                <input type="text" name="class-code" id="class-code-id"/>
-            </label>
+            <TextField
+                autoComplete="off"
+                id="class-code-id"
+                label="Class Code"
+                placeholder="User ID"
+                margin="normal"
+                style={{width:"50%",textAlign:"left"}}
+                name="class-code" 
+                value={this.state.classcode} 
+                variant="outlined"
+                onChange={this.handleCodeChange} 
+            />
             <div></div>
-            <input type="submit" value="Join" onClick={this.joinClass}/>
-
-        </div>)
+            <div style={{marginTop:'20px'}}>
+                    <Button variant="outlined" type="submit" onClick={this.joinClass}>Join</Button>
+            </div>
+        </Container>)
     }
 }
 export default StudentHome
