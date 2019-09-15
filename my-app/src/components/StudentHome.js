@@ -1,30 +1,29 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import openSocket from 'socket.io-client'
 import Container from './Container'
-import {TextField,Button} from '@material-ui/core'
-class StudentHome extends React.Component{
-    constructor(props){
+import { TextField, Button } from '@material-ui/core'
+class StudentHome extends React.Component {
+    constructor(props) {
         super(props)
-        
+
         this.state = {
-            socket: openSocket('http://localhost:8080')
+            socket: openSocket('http://40.112.61.8:8080')
         }
         this.joinClass = this.joinClass.bind(this)
         this.handleUsernameChange = this.handleUsernameChange.bind(this)
         this.handleCodeChange = this.handleCodeChange.bind(this)
-    
+
     }
-    joinClass(){
+    joinClass() {
         this.state.socket.emit('studentAction', {
-            classId: this.state.classcode,
-            studentId: this.state.username,
-            present: true
+            className: this.state.classcode,
+            student: { name: this.state.username, present: true }
         });
         /* Go to classroom animation screen */
         this.props.history.push({
             pathname: '/studyTime',
-            state: { 
+            state: {
                 classId: this.state.classcode,
                 studentId: this.state.username,
             }
@@ -38,40 +37,40 @@ class StudentHome extends React.Component{
         this.setState({ classcode: event.target.value });
     }
 
-    render(){
+    render() {
         return (
-        <Container>
-            <h1>Join a Class</h1>
-            <TextField
-                autoComplete="off"
-                id="username-id"
-                label="User ID"
-                placeholder="User ID"
-                margin="normal"
-                style={{width:"50%",textAlign:"left"}}
-                name="username" 
-                value={this.state.username} 
-                variant="outlined"
-                onChange={this.handleUsernameChange} 
-            />
-            <div></div>
-            <TextField
-                autoComplete="off"
-                id="class-code-id"
-                label="Class Code"
-                placeholder="User ID"
-                margin="normal"
-                style={{width:"50%",textAlign:"left"}}
-                name="class-code" 
-                value={this.state.classcode} 
-                variant="outlined"
-                onChange={this.handleCodeChange} 
-            />
-            <div></div>
-            <div style={{marginTop:'20px'}}>
+            <Container>
+                <h1>Join a Class</h1>
+                <TextField
+                    autoComplete="off"
+                    id="username-id"
+                    label="User ID"
+                    placeholder="User ID"
+                    margin="normal"
+                    style={{ width: "50%", textAlign: "left" }}
+                    name="username"
+                    value={this.state.username}
+                    variant="outlined"
+                    onChange={this.handleUsernameChange}
+                />
+                <div></div>
+                <TextField
+                    autoComplete="off"
+                    id="class-code-id"
+                    label="Class Code"
+                    placeholder="User ID"
+                    margin="normal"
+                    style={{ width: "50%", textAlign: "left" }}
+                    name="class-code"
+                    value={this.state.classcode}
+                    variant="outlined"
+                    onChange={this.handleCodeChange}
+                />
+                <div></div>
+                <div style={{ marginTop: '20px' }}>
                     <Button variant="outlined" type="submit" onClick={this.joinClass}>Join</Button>
-            </div>
-        </Container>)
+                </div>
+            </Container>)
     }
 }
 export default StudentHome

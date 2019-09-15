@@ -44,20 +44,36 @@ var classes = [
   }
 ]
 
+/*{
+  name: "class1",
+  students: [
+    {
+      name: "student1",
+      present: true
+    },
+    {
+      name: "student2",
+      present: false
+    }
+  ]
+}*/
 
 // int totalAttendees?
 
 io.on("connection", client => {
-  
+
+
   console.log("New client connected");
 
   /* Need to update both ClassView and StudyTime when student arrives/leaves */
-  client.on('studentAction', data => {//message from studentHome. data = {classId: , studentId: , present: }
-    console.log("hi")
-    io.emit('notifyClass', data)//notify teacher when he/she is creating session.
+  client.on('studentAction', data => {//message from studentHome. data = {className: geometry, student:{name: alenta, present: true}}
+    let cls = classes.find(c => c.name === data.className);
+    let student = cls.students.find(s => s.name === data.student.name);
+    student.present = data.student.present;
+    io.emit('notifyClass', cls.students) //notify teacher when he/she is creating session.
   })
 
-  client.on("disconnect", () => {
+  client.on("disconnect", (client) => {
     console.log("Client disconnected");
   });
 });
@@ -88,14 +104,6 @@ app.post("/startClass", (req, res) => {
 });
 
 app.post("/endClass", (req, res) => {
-  res.send({ response: "I am alive" }).status(200);
-});
-
-app.post("/addStudent", (req, res) => {
-  res.send({ response: "I am alive" }).status(200);
-});
-
-app.put("/changeActivity", (req, res) => {
   res.send({ response: "I am alive" }).status(200);
 });
 

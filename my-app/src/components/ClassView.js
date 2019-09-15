@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from './Container'
-import {Button} from '@material-ui/core'
-import {List, ListItem, ListItemText,Slider,Typography} from '@material-ui/core'
+import { Button } from '@material-ui/core'
+import { List, ListItem, ListItemText, Slider, Typography } from '@material-ui/core'
 import Done from '@material-ui/icons/Done';
 import Clear from '@material-ui/icons/Clear';
 
@@ -16,23 +16,14 @@ class ClassView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            socket: openSocket('http://localhost:8080'),
+            socket: openSocket('http://40.112.61.8:8080'),
             students: [],
             class_id: props.location.state.classId,
         }
 
         this.state.socket.on('notifyClass', data => {
-            console.log("whoa");
-            if(data.classId === this.state.class_id){
-                    for(let i=0; i<this.state.students.length; i++){
-                        if(this.state.students[i].name === data.studentId){
-                            this.state.students[i].present = data.present
-                        }
-                    }
-                    this.setState({students : this.state.students}) //?
-            } 
-        }
-        )
+            this.setState({ students: data })
+        })
     }
 
     componentDidMount() {
@@ -51,42 +42,42 @@ class ClassView extends React.Component {
         })
     }
 
-    
 
-    render(){
-        return(
+
+    render() {
+        return (
             <Container>
                 <h1>Join Class</h1>
-                <div style={ {fontSize: '150%', margin: '10px'} }> 
-                    Class code : <span style={ {fontWeight : 500} }>{this.state.class_id}</span> 
+                <div style={{ fontSize: '150%', margin: '10px' }}>
+                    Class code : <span style={{ fontWeight: 500 }}>{this.state.class_id}</span>
                 </div>
-                <List style={ {width:'50%'} }>
+                <List style={{ width: '50%' }}>
                     {this.state.students.map(
-                        (item) => 
+                        (item) =>
                             <ListItem divider={true} >
-                                <div style={{color :item.present ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end'}}>
-                                    {item.present ? <Done /> : <Clear/>}
-                                    <ListItemText icon="done" primary={item.name} style={{marginLeft:'20px'}}>{item}</ListItemText>
+                                <div style={{ color: item.present ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end' }}>
+                                    {item.present ? <Done /> : <Clear />}
+                                    <ListItemText icon="done" primary={item.name} style={{ marginLeft: '20px' }}>{item}</ListItemText>
                                 </div>
                             </ListItem>
                     )}
                 </List>
-                <div style={{width:"50%",marginTop:'30px',marginBottom:'30px'}}>
-                <Typography id="input-slider" style={{textAlign:'left'}}>
-                    Duration
+                <div style={{ width: "50%", marginTop: '30px', marginBottom: '30px' }}>
+                    <Typography id="input-slider" style={{ textAlign: 'left' }}>
+                        Duration
                 </Typography>
                     <Slider
-                    style={{width:"100%",display:'flex'}}
-                    defaultValue={60}
-                    aria-labelledby="discrete-slider"
-                    valueLabelDisplay="auto"
-                    step={15}
-                    marks
-                    min={0}
-                    max={120}
-                />
+                        style={{ width: "100%", display: 'flex' }}
+                        defaultValue={60}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        step={15}
+                        marks
+                        min={0}
+                        max={120}
+                    />
                 </div>
-                <Button onClick={() => this.goToStudyTime()} variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
+                <Button onClick={() => this.goToStudyTime()} variant="outlined" style={{ marginTop: '20px' }}> Start class </Button>
             </Container>
         )
     }
