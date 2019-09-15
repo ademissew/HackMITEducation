@@ -15,10 +15,18 @@ class CreateClassForm extends React.Component {
     }
     handleEnter(e){
         if (e.keyCode == 13){
-        this.setState({ students: this.state.students.concat(this.state.student),student:"" })
+        this.setState({ students: this.state.students.concat(
+            {
+                name : this.state.student,
+                present : false
+            }
+            //this.state.student
+        ),student:"" })
         document.getElementById("student-name-id").value = "HI"
         }
     }
+
+    
 
     addStudent(e) {
         e.preventDefault();
@@ -31,8 +39,8 @@ class CreateClassForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        createClass(this.state.className, this.state.students)
-        this.props.history.push('/selectClass')
+        createClass(this.state.className, this.state.students, this.props)
+
     }
 
     render() {
@@ -54,7 +62,7 @@ class CreateClassForm extends React.Component {
                         (item) => 
                             <ListItem divider={true} >
                                 <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
-                                    <ListItemText icon="done" primary={item} > </ListItemText>
+                                    <ListItemText icon="done" primary={item.name} > </ListItemText>
                                 </div>
                             </ListItem>
                     )}

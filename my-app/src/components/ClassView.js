@@ -6,6 +6,7 @@ import Done from '@material-ui/icons/Done';
 import Clear from '@material-ui/icons/Clear';
 
 import { getStudents } from '../api'
+import openSocket from 'socket.io-client'
 
 class ClassView extends React.Component {
     /* 
@@ -15,9 +16,24 @@ class ClassView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            socket: openSocket('http://localhost:8080'),
             students: [],
-            class_id: props.location.state.classId
+            class_id: props.location.state.classId,
         }
+
+            this.state.socket.on('notifyTeacher', duple => {
+                console.log("hi")
+                if(duple.classId == this.state.class_id){
+                        for(let i=0; i<this.state.students.length; i++){
+                            if(this.state.students[i].name == duple.studentId){
+                                this.state.students[i].present = true
+                                console.log("whoa")
+                            }
+                        }
+                        this.setState({students : this.state.students}) //?
+                } 
+            }
+        )
     }
 
     componentDidMount() {
@@ -28,6 +44,8 @@ class ClassView extends React.Component {
             });
         });
     }
+
+    
 
     render(){
         return(

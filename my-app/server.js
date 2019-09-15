@@ -45,12 +45,23 @@ var classes = [
 ]
 
 io.on("connection", client => {
+  
   console.log("New client connected");
+
+  client.on('studentJoined', duple => {//message from studentHome
+    
+    console.log(duple.classId + " " + duple.studentId)
+    io.emit('notifyTeacher', duple)
+  })
 
   client.on("disconnect", () => {
     console.log("Client disconnected");
   });
 });
+
+/*app.post("/joinClass", (req,res) => {
+  io.emit('Geometry','Joseph') //class+student info
+})*/
 
 app.get("/getClassNames", (req, res) => {
   let classNames = classes.map(cls => cls.name);
@@ -66,6 +77,7 @@ app.get("/getStudents", (req, res) => {
 app.post("/createClass", (req, res) => {
   let className = req.body.className;
   let students = req.body.students;
+
   classes.push({ "name": className, "students": students });
 
   res.send("Class created successfully").status(200);
