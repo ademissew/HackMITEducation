@@ -6,6 +6,7 @@ import Container from './Container'
 import { FadeLoader } from 'react-spinners';
 import Confetti from 'react-confetti'
 var d3Interpolate = require("d3-interpolate");
+import { getStudents, countPresent } from './api';
 
 export default class StudyTime extends React.Component {
 	constructor(props) {
