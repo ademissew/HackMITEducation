@@ -12,7 +12,7 @@ import ClassView from './components/ClassView';
 const routing = (
     <Router>
     <div>
-      <Route path="/" component={StudentHome} />
+      <Route exact path="/" component={StudentHome} />
       <Route path="/teacherHome" component={TeacherHome} />
       <Route path="/createClass" component={CreateClassForm} />
       <Route path="/classView" component={ClassView} />
