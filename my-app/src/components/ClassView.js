@@ -5,7 +5,7 @@ import { List, ListItem, ListItemText, Slider, Typography } from '@material-ui/c
 import Done from '@material-ui/icons/Done';
 import Clear from '@material-ui/icons/Clear';
 
-import { getStudents } from '../api'
+import { getStudents, countPresent } from '../api'
 import openSocket from 'socket.io-client'
 
 class ClassView extends React.Component {
@@ -38,7 +38,9 @@ class ClassView extends React.Component {
     goToStudyTime = () => {
         this.props.history.push({
             pathname: '/studyTime',
-            state: { classId: this.state.class_id }
+            state: { 
+                classId: this.state.class_id
+            }
         })
     }
 

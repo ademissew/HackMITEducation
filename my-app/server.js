@@ -60,24 +60,15 @@ var classes = [
 
 // int totalAttendees?
 
-connections = [
-  /*{
-    'connection': 'aef08312',
-    data : {'name' : 'joseph', 'classId' : 'son'}
-  }*/
-]
+
 
 io.on("connection", client => {
-
-
   console.log("New client connected");
 
   /* Need to update both ClassView and StudyTime when student arrives/leaves */
   client.on('studentAction', data => {//message from studentHome. data = {className: geometry, student:{name: alenta, present: true}}
     console.log(data);
-    connections.push({
-      'connection': client.id
-    })
+ 
     let cls = classes.find(c => c.name === data.className);
     console.log(cls);
     let student = cls.students.find(s => s.name === data.student.name);
@@ -93,6 +84,7 @@ io.on("connection", client => {
 
 app.get("/getClassNames", (req, res) => {
   let classNames = classes.map(cls => cls.name);
+  console.log(classNames);
   res.send(classNames).status(200);
 });
 

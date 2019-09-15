@@ -9,6 +9,7 @@ import openSocket from 'socket.io-client'
 import { Planet } from 'react-kawaii'
 import Container from './Container'
 import { FadeLoader } from 'react-spinners';
+import { getStudents, countPresent } from '../api'
 
 function getRandomColor() {
 	var letters = '0123456789ABCDEF';
@@ -28,18 +29,19 @@ export default class StudyTime extends React.Component {
 		if (studentId == null) {
 			isHost = true
 			studentId = -1
-		}
+        }
 		this.state = {
 			color: getRandomColor(),
-			loading: true,
-			socket: openSocket('http://18.21.220.190:8080'),
+			loading: false,
+			socket: openSocket('http://localhost:8080'),
 			studentId: studentId,
-			classId: props.location.state.classId
-		}
+            classId: props.location.state.classId,
+            numStudents: 0,
+    	}
 
-		// this.state.socket.on('notifyClass', data => {
-		// 	console.log(data.studentId + " has left the study session")
-		// })
+		this.state.socket.on('notifyClass', data => {
+            this.setState({numStudents : countPresent(data)})
+        })
 
 		this.stuff = {
 			moodMapping: {
@@ -52,7 +54,16 @@ export default class StudyTime extends React.Component {
 			moodCycle: ["ko", "sad", "happy", "excited", "blissful"],
 			index: 2
 		}
-	}
+    }
+    
+    componentDidMount() {
+        getStudents(this.state.classId).then((response) => {
+            this.setState({
+                numStudents: countPresent(response.data),
+                classId: this.state.classId
+            });
+        });
+    }
 
 
 	componentWillUnmount() {
@@ -70,15 +81,17 @@ export default class StudyTime extends React.Component {
 		}
 		return (
 			<Container>
-				{this.state.loading ? (<FadeLoader
+				{/* {this.state.loading ? (<FadeLoader
 					// css={override}
 					sizeUnit={"px"}
 					size={150}
 					color={'#123abc'}
 					loading={this.state.loading}
-				/>) :
-					<Planet size={300} mood={currentMood} color={this.stuff.moodMapping[currentMood]} text="Hello World!" />}
-			</Container>)
+                />) : */}
+                    {this.state.numStudents}
+					 {/* <Planet size={300} mood={currentMood} color={this.stuff.moodMapping[currentMood]} text="Hello World!" />} */}
+            </Container>
+        )
 	}
 }
 

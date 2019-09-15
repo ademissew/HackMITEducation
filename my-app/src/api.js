@@ -1,11 +1,21 @@
 import openSocket from 'socket.io-client';
 import axios from 'axios';
 
-const baseURL = 'http://18.21.220.190:8080'
+const baseURL = 'http://localhost:8080'
 const socket = openSocket(baseURL);
 
 function getWeather() {
     socket.emit('getWeather', null);
+}
+
+const countPresent = (currClass) => {
+    let numStudents = 0;
+    
+    for(let j=0; j<currClass.length; j++){
+        numStudents += currClass[j].present ? 1 : 0 
+    }
+        
+    return numStudents
 }
 
 const getClassNames = async () => {
@@ -45,4 +55,4 @@ const createClass = async (className, students, props) => {
     }
 };
 
-export { socket, createClass, getClassNames, getStudents };
+export { socket, createClass, getClassNames, getStudents, countPresent };
