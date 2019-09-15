@@ -2,7 +2,6 @@ import React from 'react'
 import CreateClassForm from './CreateClassForm'
 import { Link } from 'react-router-dom'
 import { Button, Grid } from '@material-ui/core'
-import axios from 'axios'
 import { getClassNames } from '../api'
 
 class SelectClass extends React.Component {

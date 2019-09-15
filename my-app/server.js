@@ -71,19 +71,25 @@ app.post("/createClass", (req, res) => {
   res.send("Class created successfully").status(200);
 });
 
+app.post("/addStudent", (req, res) => {
+  let className = req.body.className;
+  let name = req.body.name;
+  let cls = classes.find((c => c.name === className));
+  let student = cls.find((student => student.name === name));
+  student.present = true;
+
+  res.send({}).status(200);
+});
+
+app.put("/changeActivity", (req, res) => {
+  res.send({ response: "I am alive" }).status(200);
+});
+
 app.post("/startClass", (req, res) => {
   res.send({ response: "I am alive" }).status(200);
 });
 
 app.post("/endClass", (req, res) => {
-  res.send({ response: "I am alive" }).status(200);
-});
-
-app.post("/addStudent", (req, res) => {
-  res.send({ response: "I am alive" }).status(200);
-});
-
-app.put("/changeActivity", (req, res) => {
   res.send({ response: "I am alive" }).status(200);
 });
 
