@@ -4,17 +4,19 @@ import {Redirect} from 'react-router-dom'
 class StudentHome extends React.Component{
     constructor(props){
         super(props)
-        this.state = {join:false}
+        this.state = {}
         this.joinClass = this.joinClass.bind(this)
     }
     joinClass(){
         const username = document.getElementById("username-id").value
         const classcode = document.getElementById("class-code-id").value
-        this.setState({join:true,'username':username,'classcode':classcode})
+        this.setState({'username':username,'classcode':classcode})
+        // if class/username doesn't exist, should push back to /studentHome, else go to /studyTime
+        this.props.history.push("/studyTime")
     }
     render(){
         return (
-        this.state.join ? <Redirect to="/studyTime"/> : (<div>
+        <div>
             <label>
                 Username: 
                 <input type="text" name="username" id="username-id"/>
@@ -27,7 +29,7 @@ class StudentHome extends React.Component{
             <div></div>
             <input type="submit" value="Join" onClick={this.joinClass}/>
 
-        </div>))
+        </div>)
     }
 }
 export default StudentHome
