@@ -1,4 +1,5 @@
 import React from 'react';
+import { socket, getWeather } from "./api";
 // import logo from './logo.svg';
 import './App.css';
 import TeacherHome from './components/TeacherHome'
@@ -7,6 +8,8 @@ import StudentHome from './components/StudentHome'
 
 
 function App() {
+  // socket.on("CurrentStudents", data => this.setState({ response: data }));
+
   return (
     <div>HI</div>
     // <div className="App">
@@ -27,5 +30,4 @@ function App() {
     // </div>
   );
 }
-
 export default App;
