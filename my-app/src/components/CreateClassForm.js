@@ -1,7 +1,8 @@
 import React from 'react'
 import Container from './Container'
 import { createClass } from '../api'
-import {Button,Fab, TextField} from '@material-ui/core'
+import {Button,Fab, TextField,List, ListItem, ListItemText} from '@material-ui/core'
+
 import AddIcon from '@material-ui/icons/Add';
 
 class CreateClassForm extends React.Component {
@@ -41,6 +42,7 @@ class CreateClassForm extends React.Component {
             <Container>
                 <TextField
                     required
+                    autoComplete="off"
                     id="class-name-id"
                     label="Class Name:"
                     placeholder="Class Name"
@@ -49,12 +51,19 @@ class CreateClassForm extends React.Component {
                     name="class-name" 
                     onChange={this.handleChange} 
                     />
-                <ul>
-                    {this.state.students.map((student) => <li key={student}>{student}</li>)}
-                </ul>
+                <List style={ {width:'50%'} }>
+                    {this.state.students.map(
+                        (item) => 
+                            <ListItem divider={true} >
+                                <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
+                                    <ListItemText icon="done" primary={item} > </ListItemText>
+                                </div>
+                            </ListItem>
+                    )}
+                </List>
                     
                     <TextField
-                        required
+                        autoComplete="off"
                         id="student-name-id"
                         label="Add Student:"
                         placeholder="Student ID"
@@ -69,7 +78,9 @@ class CreateClassForm extends React.Component {
                     
                         {/* <AddIcon color="disabled" style={{width:"10%",display:'flex',paddingTop:"5%"}}/> */}
 
-                <Button variant="outlined" type="submit" onClick={this.handleSubmit}>Create </Button>
+                <div style={{marginTop:'20px'}}>
+                    <Button variant="outlined" type="submit" onClick={this.handleSubmit}>Create </Button>
+                </div>
             </Container>
         )
     }

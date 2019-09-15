@@ -20,9 +20,9 @@ const Container = ({ children }) => (
         align="center"
         justify="center"
         direction="column"
-        style={{height:'80vh', display:'flex'}}
+        style={{height:'auto',display:"flex",flexWrap: "wrap"}}
       >
-          <div style={{display : 'inline'}}>
+          <div style={{display : 'inline-block',width:"100%",height:'100vh',marginTop:"100px"}}>
             {children}
           </div>
         </Grid>
