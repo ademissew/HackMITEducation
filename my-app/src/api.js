@@ -1,24 +1,47 @@
 import openSocket from 'socket.io-client';
 import axios from 'axios';
-const socket = openSocket('http://localhost:8080');
+
+const baseURL = 'http://localhost:8080'
+const socket = openSocket(baseURL);
 
 function getWeather() {
     socket.emit('getWeather', null);
 }
 
-const createClass = async (teacher, className, students) => {
+const getClassNames = async () => {
+    try {
+        const res = await axios.get(
+            baseURL + "/getClassNames"
+        );
+        return res;
+    } catch (error) {
+        console.error(`Error: ${error.code}`);
+    }
+};
+
+const getStudents = async (className) => {
+    try {
+        const res = await axios.get(
+            baseURL + "/getStudents?className=" + className
+        );
+        return res;
+    } catch (error) {
+        console.error(`Error: ${error.code}`);
+    }
+};
+
+const createClass = async (className, students) => {
     let data = {
-        "teacher": teacher,
         "className": className,
         "students": students
     }
     try {
         const res = await axios.post(
-            "http://localhost:8080/createClass", data
+            baseURL + "/createClass", data
         );
     } catch (error) {
         console.error(`Error: ${error.code}`);
     }
 };
 
-export { socket, createClass };
+export { socket, createClass, getClassNames, getStudents };

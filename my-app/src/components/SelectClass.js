@@ -1,15 +1,20 @@
 import React from 'react'
 import CreateClassForm from './CreateClassForm'
-import {Link} from 'react-router-dom'
-import {Button, Grid} from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { Button, Grid } from '@material-ui/core'
+import axios from 'axios'
+import { getClassNames } from '../api'
 
 class SelectClass extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        
-        const classes = ['Calculus', 'Geometry']
+        this.state = { classes: [] }
+    }
 
-        this.state = {'classes': classes }
+    componentDidMount() {
+        getClassNames().then((response) => {
+            this.setState({ 'classes': response.data });
+        });
     }
 
     /*async getDataAxios(){
@@ -23,20 +28,26 @@ class SelectClass extends React.Component {
     goToClass = (classId) => {
         this.props.history.push({
             pathname: '/classView',
-            state : {classId : classId}
+            state: { classId: classId }
         })
     }
 
-    render(){
+    render() {
         return (
-        
+
             <div>
-                 {<ul>
-                    {this.state.classes.map(
-                        (item)=><button onClick={(e) => this.goToClass(item)}> {item} </button>
-                    )}
+                {<ul>
+                    {/* {() => Object.keys(this.state.classes).map(
+                        (className) => <button onClick={(e) => this.goToClass({ className: this.state.classes[className] })}> {className} </button>
+                    )} */
+                        this.state.classes.map(
+                            (item, i) => <button key={i} onClick={(e) => this.goToClass(item)}> {item} </button>
+                        )
+
+                    }
+
                 </ul>}
-                
+
             </div>
 
         )
