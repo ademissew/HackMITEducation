@@ -12,7 +12,7 @@ class ClassView extends React.Component {
        ]
        this.state = {
            students : students,
-           class_id : -1
+           class_id : props.location.state.classId
        }
    }
 

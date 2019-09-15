@@ -1,4 +1,6 @@
-import React from 'react';
+import React from 'react'
+import CreateClassForm from './CreateClassForm'
+import {Link} from 'react-router-dom'
 
 class TeacherHome extends React.Component {
     constructor(props){
@@ -17,13 +19,26 @@ class TeacherHome extends React.Component {
         console.log(response.data)
     }*/
 
+    goToClass = (classId) => {
+        this.props.history.push({
+            pathname: '/classView',
+            state : {classId : classId}
+        })
+    }
+
     render(){
         return (
             <div>
                 {<ul>
-                    {this.state.classes.map((item)=><button> {item} </button>)}
+                    {this.state.classes.map(
+                        (item)=><button onClick={(e) => this.goToClass(item)}> {item} </button>
+                    )}
                 </ul>}
-                <button> Create a class </button>
+                <Link to={{
+                    pathname : '/createClass'
+                }}>
+                    Create a class
+                </Link>
             </div>
         )
     }
