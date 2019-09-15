@@ -9,6 +9,7 @@ import StudentHome from './components/StudentHome';
 import CreateClassForm from './components/CreateClassForm';
 import ClassView from './components/ClassView';
 import StudyTime from './components/StudyTime';
+import 'typeface-roboto'
 
 const routing = (
     <Router>
