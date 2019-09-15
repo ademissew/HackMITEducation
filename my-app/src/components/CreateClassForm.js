@@ -23,7 +23,7 @@ class CreateClassForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        createClass("alenta", this.state.className, this.state.students)
+        createClass(this.state.className, this.state.students)
     }
 
     render() {

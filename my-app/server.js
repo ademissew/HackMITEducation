@@ -15,13 +15,34 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIo(server);
 
-var teachers = {
-  alenta: {
-    class1: {
-      students: ["id1", "id2", "id3"]
-    }
+var classes = [
+  {
+    name: "class1",
+    students: [
+      {
+        name: "student1",
+        present: true
+      },
+      {
+        name: "student2",
+        present: false
+      }
+    ]
+  },
+  {
+    name: "class2",
+    students: [
+      {
+        name: "student3",
+        present: true
+      },
+      {
+        name: "student4",
+        present: false
+      }
+    ]
   }
-}
+]
 
 io.on("connection", client => {
   console.log("New client connected");
@@ -31,21 +52,22 @@ io.on("connection", client => {
   });
 });
 
-app.get("/getClasses", (req, res) => {
-  let teacher = req.query.teacher.toLowerCase();
-  if (teacher in teachers) {
-    res.send(teachers[teacher]).status(200);
-  } else {
-    res.send("Teacher does not exist").status(200);
-  }
+app.get("/getClassNames", (req, res) => {
+  let classNames = classes.map(cls => cls.name);
+  res.send(classNames).status(200);
+});
+
+app.get("/getStudents", (req, res) => {
+  let className = req.query.className;
+  let cls = classes.find((c => c.name === className));
+  res.send(cls.students).status(200);
 });
 
 app.post("/createClass", (req, res) => {
-  let teacher = req.body.teacher.toLowerCase();
   let className = req.body.className;
   let students = req.body.students;
+  classes.push({ "name": className, "students": students });
 
-  teachers[teacher][className] = students;
   res.send("Class created successfully").status(200);
 });
 
