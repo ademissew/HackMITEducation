@@ -23,7 +23,6 @@ class ClassView extends React.Component {
         });
     }
 
-
     render() {
         return (
             <div>

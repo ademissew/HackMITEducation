@@ -1,6 +1,5 @@
 import React from 'react'
 import {Grid} from '@material-ui/core'
-
 /*const theme = createMuiTheme({
 
     Custom theme?
@@ -15,16 +14,16 @@ import {Grid} from '@material-ui/core'
   })*/
 
 const Container = ({ children }) => (
-    // <ThemeProvider theme={theme}>
         <Grid
-            container
-            direction="row"
-            justify="center" 
-            alignItems="center"
-        > 
+        container
+        spacing={0}
+        align="center"
+        justify="center"
+        direction="column"
+        style={{height:'80vh'}}
+      >
             {children}
         </Grid>
-    // </ThemeProvider>
 )
 
 export default Container
