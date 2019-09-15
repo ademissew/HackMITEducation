@@ -1,9 +1,7 @@
 import React from 'react'
 import Container from './Container'
 import { createClass } from '../api'
-import {Button,Fab, TextField,List, ListItem, ListItemText} from '@material-ui/core'
-
-import AddIcon from '@material-ui/icons/Add';
+import {Button, TextField,List, ListItem, ListItemText} from '@material-ui/core'
 
 class CreateClassForm extends React.Component {
     constructor(props) {
@@ -76,8 +74,6 @@ class CreateClassForm extends React.Component {
                         onKeyDown={this.handleEnter}
                         />
                     
-                        {/* <AddIcon color="disabled" style={{width:"10%",display:'flex',paddingTop:"5%"}}/> */}
-
                 <div style={{marginTop:'20px'}}>
                     <Button variant="outlined" type="submit" onClick={this.handleSubmit}>Create </Button>
                 </div>
