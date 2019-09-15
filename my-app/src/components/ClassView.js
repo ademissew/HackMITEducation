@@ -16,7 +16,7 @@ class ClassView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            socket: openSocket('http://40.112.61.8:8080'),
+            socket: openSocket('http://localhost:8080'),
             students: [],
             class_id: props.location.state.classId,
         }
