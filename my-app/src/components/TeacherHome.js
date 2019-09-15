@@ -2,6 +2,7 @@ import React from 'react'
 import CreateClassForm from './CreateClassForm'
 import {Link} from 'react-router-dom'
 import {Button, Grid} from '@material-ui/core'
+import Container from './Container'
 
 class TeacherHome extends React.Component {
     constructor(props){
@@ -29,22 +30,12 @@ class TeacherHome extends React.Component {
 
     render(){
         return (
-        
+            <Container>
             <div>
                 <button onClick={() => this.props.history.push('/createClass')}> Create class </button>
                 <button onClick={() => this.props.history.push('/selectClass')}> Start class </button>
-                {/* {<ul>
-                    {this.state.classes.map(
-                        (item)=><button onClick={(e) => this.goToClass(item)}> {item} </button>
-                    )}
-                </ul>}
-                <Link to={{
-                    pathname : '/createClass'
-                }}>
-                    Create a class
-                </Link> */}
             </div>
-
+            </Container>
         )
     }
 }
