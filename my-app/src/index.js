@@ -18,11 +18,10 @@ const routing = (
       <Route path="/createClass" component={CreateClassForm} />
       <Route path="/classView" component={ClassView} />
       <Route path="/studyTime" component={StudyTime} />
-
     </div>
   </Router>
 )
-ReactDOM.render(<StudyTime/>, document.getElementById('root')); 
+ReactDOM.render(routing, document.getElementById('root')); 
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
