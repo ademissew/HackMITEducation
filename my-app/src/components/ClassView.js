@@ -1,9 +1,12 @@
 import React from 'react'
 import Container from './Container'
-import {Button} from '@material-ui/core'
-import {List, ListItem, ListItemText} from '@material-ui/core'
+import { Button } from '@material-ui/core'
+import { List, ListItem, ListItemText, Slider, Typography } from '@material-ui/core'
 import Done from '@material-ui/icons/Done';
+import Clear from '@material-ui/icons/Clear';
+
 import { getStudents } from '../api'
+import openSocket from 'socket.io-client'
 
 class ClassView extends React.Component {
     /* 
@@ -13,9 +16,23 @@ class ClassView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            socket: openSocket('http://localhost:8080'),
             students: [],
-            class_id: props.location.state.classId
+            class_id: props.location.state.classId,
         }
+
+        this.state.socket.on('notifyClass', data => {
+            console.log("whoa");
+            if (data.classId === this.state.class_id) {
+                for (let i = 0; i < this.state.students.length; i++) {
+                    if (this.state.students[i].name === data.studentId) {
+                        this.state.students[i].present = data.present
+                    }
+                }
+                this.setState({ students: this.state.students }) //?
+            }
+        }
+        )
     }
 
     componentDidMount() {
@@ -27,24 +44,49 @@ class ClassView extends React.Component {
         });
     }
 
-    render(){
-        return(
+    goToStudyTime = () => {
+        this.props.history.push({
+            pathname: '/studyTime',
+            state: { classId: this.state.class_id }
+        })
+    }
+
+
+
+    render() {
+        return (
             <Container>
-                <div style={ {fontSize: '150%'} }> 
-                    Class code : <span style={ {fontWeight : 500} }>{this.state.class_id}</span> 
+                <h1>Join Class</h1>
+                <div style={{ fontSize: '150%', margin: '10px' }}>
+                    Class code : <span style={{ fontWeight: 500 }}>{this.state.class_id}</span>
                 </div>
-                <List style={ {width:'50%'} }>
+                <List style={{ width: '50%' }}>
                     {this.state.students.map(
-                        (item) => 
+                        (item) =>
                             <ListItem divider={true} >
-                                <div style={{color :item.present == true ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end'}}>
-                                    <Done />
-                                    <ListItemText icon="done" primary={item.name} > </ListItemText>
+                                <div style={{ color: item.present ? 'green' : 'lightgray', display: 'flex', justifyContent: 'flex-end' }}>
+                                    {item.present ? <Done /> : <Clear />}
+                                    <ListItemText icon="done" primary={item.name} style={{ marginLeft: '20px' }}>{item}</ListItemText>
                                 </div>
                             </ListItem>
                     )}
                 </List>
-                <Button variant="outlined" style={ {marginTop : '20px'} }> Start class </Button>
+                <div style={{ width: "50%", marginTop: '30px', marginBottom: '30px' }}>
+                    <Typography id="input-slider" style={{ textAlign: 'left' }}>
+                        Duration
+                </Typography>
+                    <Slider
+                        style={{ width: "100%", display: 'flex' }}
+                        defaultValue={60}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        step={15}
+                        marks
+                        min={0}
+                        max={120}
+                    />
+                </div>
+                <Button onClick={() => this.goToStudyTime()} variant="outlined" style={{ marginTop: '20px' }}> Start class </Button>
             </Container>
         )
     }

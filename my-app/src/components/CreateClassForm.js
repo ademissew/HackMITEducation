@@ -1,5 +1,7 @@
 import React from 'react'
+import Container from './Container'
 import { createClass } from '../api'
+import {Button, TextField,List, ListItem, ListItemText} from '@material-ui/core'
 
 class CreateClassForm extends React.Component {
     constructor(props) {
@@ -8,43 +10,83 @@ class CreateClassForm extends React.Component {
         this.addStudent = this.addStudent.bind(this)
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleEnter = this.handleEnter.bind(this)
+
+    }
+    handleEnter(e){
+        if (e.keyCode == 13){
+        this.setState({ students: this.state.students.concat(
+            {
+                name : this.state.student,
+                present : false
+            }
+            //this.state.student
+        ),student:"" })
+        document.getElementById("student-name-id").value = "HI"
+        }
     }
 
-    addStudent() {
-        const student = document.getElementById("student-name-id").value
-        console.log(student)
-        this.setState({ students: this.state.students.concat(student) })
-        document.getElementById("student-name-id").value = ""
+    
+
+    addStudent(e) {
+        e.preventDefault();
+        this.setState({ student: e.target.value });
     }
 
     handleChange(event) {
-        this.setState({ students: this.state.students, className: event.target.value });
+        this.setState({ className: event.target.value });
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        createClass(this.state.className, this.state.students)
-        this.props.history.push('/selectClass')
+        createClass(this.state.className, this.state.students, this.props)
+
     }
 
     render() {
-        return (<div >
-            <label>
-                Class Name:
-                    <input type="text" name="class-name" value={this.state.className} onChange={this.handleChange} />
-            </label>
-            <div></div>
-            <ul>
-                {this.state.students.map((student) => <li key={student}>{student}</li>)}
-            </ul>
-            <label>
-                StudentId:
-                    <input type="text" name="student-name" id="student-name-id" />
-                <button name="add-student" onClick={this.addStudent}>+</button>
-            </label>
-            <div></div>
-            <button type="submit" onClick={this.handleSubmit}>Create</button>
-        </div >)
+        return (
+            <Container>
+                <TextField
+                    required
+                    autoComplete="off"
+                    id="class-name-id"
+                    label="Class Name:"
+                    placeholder="Class Name"
+                    margin="normal"
+                    style={{width:"50%"}}
+                    name="class-name" 
+                    onChange={this.handleChange} 
+                    />
+                <List style={ {width:'50%'} }>
+                    {this.state.students.map(
+                        (item) => 
+                            <ListItem divider={true} >
+                                <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
+                                    <ListItemText icon="done" primary={item.name} > </ListItemText>
+                                </div>
+                            </ListItem>
+                    )}
+                </List>
+                    
+                    <TextField
+                        autoComplete="off"
+                        id="student-name-id"
+                        label="Add Student:"
+                        placeholder="Student ID"
+                        margin="normal"
+                        style={{width:"50%",textAlign:"left"}}
+                        name="student-name" 
+                        value={this.state.student} 
+                        variant="outlined"
+                        onChange={this.addStudent} 
+                        onKeyDown={this.handleEnter}
+                        />
+                    
+                <div style={{marginTop:'20px'}}>
+                    <Button variant="outlined" type="submit" onClick={this.handleSubmit}>Create </Button>
+                </div>
+            </Container>
+        )
     }
 }
 
