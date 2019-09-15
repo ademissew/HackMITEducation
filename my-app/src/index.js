@@ -9,6 +9,7 @@ import StudentHome from './components/StudentHome';
 import CreateClassForm from './components/CreateClassForm';
 import ClassView from './components/ClassView';
 import StudyTime from './components/StudyTime';
+import SelectClass from './components/SelectClass'
 import 'typeface-roboto'
 
 const routing = (
@@ -19,6 +20,7 @@ const routing = (
       <Route path="/createClass" component={CreateClassForm} />
       <Route path="/classView" component={ClassView} />
       <Route path="/studyTime" component={StudyTime} />
+      <Route path="/selectClass" component={SelectClass} />
 
     </div>
   </Router>
